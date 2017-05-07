@@ -14,7 +14,7 @@ Macbook Pro Mid 2014. 2.6 GHz Intel Core i5.
 I noticed that it worked only when I wasn't screen recording with Quicktime. Once I do screen-recording it doesn't work anymore so I recorded the video with my phone.
 
 I noticed that I was always bumping here:
-[!cubr](https://github.com/mithi/pid-1/blob/master/curb.png)
+![cubr](https://github.com/mithi/pid-1/blob/master/curb.png)
 
  For each time step we are able to sense the **speed**, **steering angle**, and **cross track error**. The cross track error (CTE) is the error from our desired position in the track. **The steering angle should be between -1 and 1.**
 The angle of the wheel is between -25 and 25.
