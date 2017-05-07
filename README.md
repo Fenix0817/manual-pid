@@ -31,7 +31,7 @@ Here is the effect of each parameter:
 ### P (proportional control)
 -  If the error is small the more conservative the response. If the error is large the more aggressive the response. If this parameter is too large the tendency is to overshoot and miss the desired output. If it's too large the oscillation will be increasing and instead of converging it will diverge. If it's too small, it will take a longer time to get to the desired set point.
 
-###I (integral control)
+### I (integral control)
 - The parameter that sets how much we take into
 consideration the cumulative error over time.
 This is usually used when we see that there is a systematic bias wherein we are not converging to our desired set point. To this is to drive the system towards that set point. This is not used here because it seems like there is no apparent drift.
@@ -53,16 +53,12 @@ if (fabs(cte) > 0.75 &&
 }
 ```
 
-Basically what this is doing is that if the error
-is too high, and the speed is too high,
-and that we are most likely moving in a curve
-instead of moving straight, we should not throttle.
-So as to be conservative and not hit the curve.
-in all other cases we should accelerate to the maximum allowed value. The parameters here are also tuned manually.
+Basically what this is doing is that if the error is too high, and the speed is too high,
+and that we are most likely moving in a curve instead of moving straight, we should not throttle,
+so as to be conservative and not hit the curve; but in all other cases we should accelerate to the maximum allowed value. The parameters here are also tuned manually.
 
 This is how we computes the result of the PID. I also display values such as the total running error,
-the average error, and the number of time steps to
-help us decide how to tune the parameters.
+the average error, and the number of time steps to help us decide how to tune the parameters.
 
 ```c
 double SimplePIDController::compute(const double error){
@@ -85,8 +81,6 @@ double SimplePIDController::compute(const double error){
                    this->Kd * this->d_error);
   return this->r;
 }
-```
-
 ```
 
 ---
