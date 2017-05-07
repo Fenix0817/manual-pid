@@ -56,9 +56,7 @@ the throttle to control the speed.**
 ```c
 double throttle_value = 1.0;
 
-if (fabs(cte) > 0.75 &&
-    speed > 50.0 &&
-    fabs(angle) > 10.0 ) {
+if (fabs(cte) > 0.75 && speed > 50.0 && fabs(angle) > 10.0 ) {
   throttle_value = 0.0;
 }
 ```
