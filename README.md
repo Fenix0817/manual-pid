@@ -4,9 +4,19 @@ the original repository:
 - https://github.com/udacity/CarND-PID-Control-Project/
 
 # REFLECTIONS
+Here is the video
+- https://www.youtube.com/watch?v=bHgkd8XienM
 
- For each time step we are able to sense the **speed**, **steering angle**, and **cross track error**. The cross track error (CTE) is the error from our desired position in the track.
-**The steering angle should be between -1 and 1.**
+I used 640 x 480 screen resolution, with a graphic
+quality of fastest in macOS Sierra Version 10.12.4
+Macbook Pro Mid 2014. 2.6 GHz Intel Core i5.
+
+I noticed that it worked only when I wasn't screen recording with Quicktime. Once I do screen-recording it doesn't work anymore so I recorded the video with my phone.
+
+I noticed that I was always bumping here:
+[!cubr](https://github.com/mithi/pid-1/blob/master/curb.png)
+
+ For each time step we are able to sense the **speed**, **steering angle**, and **cross track error**. The cross track error (CTE) is the error from our desired position in the track. **The steering angle should be between -1 and 1.**
 The angle of the wheel is between -25 and 25.
 
 The final hyper parameters were chosen by manual tuning to control the steering angle based on the CTE. The parameters where chosen through trial and error and by eyeing the effects. If there is too much oscillations, either the proportional gain was reduced or the derivative gain was increased until it behaves well. The integral term was set to zero.
