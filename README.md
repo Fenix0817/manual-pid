@@ -67,7 +67,7 @@ Basically what this is doing is that if the error is too high, and the speed is 
 and that we are most likely moving in a curve instead of moving straight, we should not throttle,
 so as to be conservative and not hit the curve; but in all other cases we should accelerate to the maximum allowed value. The parameters here are also tuned manually.
 
-This is how we computes the result of the PID. I also display values such as the total running error,
+This is how we compute the result of the PID. I also display values such as the total running error,
 the average error, and the number of time steps to help us decide how to tune the parameters.
 
 ```c
