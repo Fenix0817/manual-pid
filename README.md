@@ -26,7 +26,7 @@ In the future, I will be implementing the twiddle algorithm to get better parame
 
 SimplePIDController steerPid;
 steerPid.set(0.25, 0.000, 25.0);
-# proportional gain = 0.25, derivative gain = 25.0
+// proportional gain = 0.25, derivative gain = 25.0
 
 double steer_value;
 double temp = steerPid.compute(cte);
