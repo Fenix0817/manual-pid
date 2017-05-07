@@ -33,7 +33,7 @@ double temp = steerPid.compute(cte);
 
 steer_value = temp;
 if (temp > 1.0) { steer_value = 1.0;}
-if (temp < -1.0) {steer_value = -1.0;}
+if (temp < -1.0) { steer_value = -1.0;}
 
 ```
 
