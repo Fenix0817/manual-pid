@@ -41,7 +41,7 @@ int main(){
   * CONTROL INITIALIZED HERE
   ********************************/
   SimplePIDController steerPid;
-  steerPid.set(0.25, 0.000, 25.0);
+  steerPid.set(0.12, 0.0, 3.25);
 
   /*************************************/
   /*************************************/
@@ -81,22 +81,24 @@ int main(){
 
           double throttle_value = 1.0;
 
-          if (fabs(cte) > 0.75 && speed > 50.0 && fabs(angle) > 10.0 ) {
-            throttle_value = 0.0;
+          if (fabs(cte) > 0.6 && fabs(angle) > 7.5 && speed > 50.0) {
+            std::cout << "$" << std::endl; // curve
+            throttle_value = -1.0;
+          } else {
+            std::cout << "|" << std::endl; // straight
           }
 
-          std::cout << "--> CTE:" << cte << " out:" << temp << " steer:" << steer_value << std::endl;
-
+          // uncomment the two lines below if you want to reset
           //std::string msg = "42[\"reset\",{}]";
           //ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
-          /*************************************/
-          /*************************************/
+          //std::cout << "--> CTE:" << cte << " out:" << temp << " steer:" << steer_value << std::endl;
+
 
           json msgJson;
           msgJson["steering_angle"] = steer_value;
           msgJson["throttle"] = throttle_value;
           auto msg = "42[\"steer\"," + msgJson.dump() + "]";
-          //std::cout << msg << std::endl;
+          //std::cout << msg << std::endl; // show message sent to simulator
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
         }
 
