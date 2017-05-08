@@ -7,16 +7,13 @@ the original repository:
 Here is the video
 - https://youtu.be/ptW-fpZ2Mp4
 
-I used 640 x 480 screen resolution, with a graphic
-quality of fastest in macOS Sierra Version 10.12.4
-Macbook Pro Mid 2014. 2.6 GHz Intel Core i5.
+I used 640 x 480 screen resolution, with a graphic quality of fastest in macOS Sierra Version 10.12.4 Macbook Pro Mid 2014. 2.6 GHz Intel Core i5.
 
 I noticed that it worked only when I wasn't screen recording with Quicktime. Once I do screen-recording it doesn't work anymore so I recorded the video with my phone.
 
- For each time step we are able to sense the **speed**, **steering angle**, and **cross track error**. The cross track error (CTE) is the error from our desired position in the track. **The steering angle should be between -1 and 1.**
-The angle of the wheel is between -25 and 25.
+ For each time step we are able to sense the **speed**, **steering angle**, and **cross track error**. The cross track error (CTE) is the error from our desired position in the track. **The steering angle should be between -1 and 1.** The angle of the wheel is between -25 and 25.
 
-The final hyper parameters were chosen by manual tuning to control the steering angle based on the CTE. The parameters where chosen through trial and error and by eyeing the effects. If there is too much oscillations, either the proportional gain was reduced or the derivative gain was increased until it behaves well. The integral term was set to zero. In the future, I will be implementing the twiddle algorithm to get better parameters and see how fast we can make the vehicle go.
+The final hyper parameters were chosen by manual tuning to control the steering angle based on the CTE. The parameters where chosen through trial and error and by eyeing the effects. If there are too much oscillations, either the proportional gain was reduced or the derivative gain was increased until it behaves well. The integral term was set to zero. In the future, I will be implementing the twiddle algorithm to get better parameters and see how fast we can make the vehicle go.
 
 ```c
 
@@ -39,11 +36,9 @@ consideration the cumulative error over time.
 This is usually used when we see that there is a systematic bias wherein we are not converging to our desired set point. To this is to drive the system towards that set point. This is not used here because it seems like there is no apparent drift.
 
 ### D (derivative control)
-- This parameter considers the rate of change in the error. If the error is rapidly approaching zero, this parameter will attempt to slow things down to avoid overshooting. If this is too large, then there will be overdamping which means it will take longer to reach the desired goal. If this is too small,
-then there will be oscillations as there will be overshooting.
+- This parameter considers the rate of change in the error. If the error is rapidly approaching zero, this parameter will attempt to slow things down to avoid overshooting. If this is too large, then there will be overdamping which means it will take longer to reach the desired goal. If this is too small, then there will be oscillations as there will be overshooting.
 
-**In addition to this, I also decided to mess with
-the throttle to control the speed.**
+**In addition to this, I also decided to mess with the throttle to control the speed.**
 
 ```c
 
@@ -51,10 +46,12 @@ double throttle_value = 1.0;
 
 if (fabs(cte) > 0.6 && fabs(angle) > 7.5 && speed > 50.0) {
   throttle_value = -1.0; // curve
+}
 ```
 
-Basically what this is doing is that if the error is too high, and the speed is too high,
-and that we are most likely moving in a curve instead of moving straight, we should decelerate aggressively, so as to be conservative and not hit the curve; but in all other cases we should accelerate to the maximum allowed value. The parameters here are also tuned manually.
+Basically what this is doing is that if the error is too high, if we are most likely
+moving in a curve instead of moving straight based on the steering angle, and the speed is too high,
+ we should decelerate aggressively, so as to be conservative and not hit the curve; but in all other cases we should accelerate to the maximum allowed value. The parameters here are also tuned manually.
 
 We get speeds as high as more than 95mph when moving straight but most
 frequently the speed just plays around 65 - 85mph. The minimum speed at the
