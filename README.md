@@ -33,10 +33,11 @@ Here is the effect of each parameter:
 ### I (integral control)
 - The parameter that sets how much we take into
 consideration the cumulative error over time.
-This is usually used when we see that there is a systematic bias wherein we are not converging to our desired set point. To this is to drive the system towards that set point. This is not used here because it seems like there is no apparent drift.
+This is usually used when we see that there is a systematic bias wherein we are not converging to our desired set point. So this is to drive the system towards that set point. This is not used here because it seems like there is no apparent drift.
 
 ### D (derivative control)
-- This parameter considers the rate of change in the error. If the error is rapidly approaching zero, this parameter will attempt to slow things down to avoid overshooting. If this is too large, then there will be overdamping which means it will take longer to reach the desired goal. If this is too small, then there will be oscillations as there will be overshooting.
+- This parameter considers the rate of change in the error. If the error is rapidly approaching zero, this parameter will attempt to slow things down to avoid overshooting. If this is too large, then there will be overdamping which means it will take longer to reach the desired goal.
+It's possible that even before it reaches its goal, the goal has already changes (for example the car is supposed to straight, now needs to curve). If this is too small, then there will be oscillations as there will be overshooting.
 
 **In addition to this, I also decided to mess with the throttle to control the speed.**
 
@@ -51,10 +52,9 @@ if (fabs(cte) > 0.6 && fabs(angle) > 7.5 && speed > 50.0) {
 
 Basically what this is doing is that if the error is too high, if we are most likely
 moving in a curve instead of moving straight based on the steering angle, and the speed is too high,
- we should decelerate aggressively, so as to be conservative and not hit the curve; but in all other cases we should accelerate to the maximum allowed value. The parameters here are also tuned manually.
+we should decelerate aggressively, so as to be conservative and not hit the curve; but in all other cases we should accelerate to the maximum allowed value. The parameters here are also tuned manually.
 
-We get speeds as high as more than 95mph when moving straight but most
-frequently the speed just plays around 65 - 85mph. The minimum speed at the
+We get speeds as high as more than 95mph when moving straight but most frequently the speed just plays around 65 - 85mph. The minimum speed at the
 curves is 50mph.
 
 This is how we compute the result of the PID. I also display values such as the total running error, the average error, and the number of time steps to help us decide how to tune the parameters.
