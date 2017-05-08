@@ -13,7 +13,7 @@ I noticed that it worked only when I wasn't screen recording with Quicktime. Onc
 
  For each time step we are able to sense the **speed**, **steering angle**, and **cross track error**. The cross track error (CTE) is the error from our desired position in the track. **The steering angle should be between -1 and 1.** The angle of the wheel is between -25 and 25.
 
-The final hyper parameters were chosen by manual tuning to control the steering angle based on the CTE. The parameters where chosen through trial and error and by eyeing the effects. If there are too much oscillations, either the proportional gain was reduced or the derivative gain was increased until it behaves well. The integral term was set to zero. In the future, I will be implementing the twiddle algorithm to get better parameters and see how fast we can make the vehicle go.
+The final hyper parameters were chosen by manual tuning to control the steering angle based on the CTE. The parameters where chosen through trial and error and by eyeing the effects. If there are too much oscillations, either the proportional gain was reduced or the derivative gain was increased until it behaves well. The integral term was set to zero. In the future, I will be implementing the parameter optimization algorithm to get better parameters and see how fast we can make the vehicle go.
 
 ```c
 
