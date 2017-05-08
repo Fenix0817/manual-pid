@@ -23,13 +23,16 @@ void SimplePIDController::set(double p, double i, double d) {
 
 double SimplePIDController::compute(const double error){
 
+  // Uncomment the lines below if you are manually tuning
+  /*
   this->n++;
   this->total_square_error += error * error;
   double average_error = this->total_square_error / this->n;
 
-  cout << "#" << this->n
+  cout << " #" << this->n
        << " running average: " << average_error
        << " running total: " << this->total_square_error << endl;
+  */
 
   this->p_error = error;
   this->i_error += error;
