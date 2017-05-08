@@ -5,7 +5,7 @@ the original repository:
 
 # REFLECTIONS
 Here is the video
-- https://www.youtube.com/watch?v=bHgkd8XienM
+- https://youtu.be/ptW-fpZ2Mp4
 
 I used 640 x 480 screen resolution, with a graphic
 quality of fastest in macOS Sierra Version 10.12.4
@@ -13,28 +13,20 @@ Macbook Pro Mid 2014. 2.6 GHz Intel Core i5.
 
 I noticed that it worked only when I wasn't screen recording with Quicktime. Once I do screen-recording it doesn't work anymore so I recorded the video with my phone.
 
-I noticed that I was always bumping here:
-![cubr](https://github.com/mithi/pid-1/blob/master/curb.png)
-
  For each time step we are able to sense the **speed**, **steering angle**, and **cross track error**. The cross track error (CTE) is the error from our desired position in the track. **The steering angle should be between -1 and 1.**
 The angle of the wheel is between -25 and 25.
 
-The final hyper parameters were chosen by manual tuning to control the steering angle based on the CTE. The parameters where chosen through trial and error and by eyeing the effects. If there is too much oscillations, either the proportional gain was reduced or the derivative gain was increased until it behaves well. The integral term was set to zero.
-In the future, I will be implementing the twiddle algorithm to get better parameters and see how fast we can make the vehicle go.
+The final hyper parameters were chosen by manual tuning to control the steering angle based on the CTE. The parameters where chosen through trial and error and by eyeing the effects. If there is too much oscillations, either the proportional gain was reduced or the derivative gain was increased until it behaves well. The integral term was set to zero. In the future, I will be implementing the twiddle algorithm to get better parameters and see how fast we can make the vehicle go.
 
 ```c
 
 SimplePIDController steerPid;
-steerPid.set(0.25, 0.000, 25.0);
-// proportional gain = 0.25, derivative gain = 25.0
+steerPid.set(0.12, 0.0, 3.25); // proportional gain = 0.12, derivative gain = 3.25
 
-double steer_value;
-double temp = steerPid.compute(cte);
+double steer_value = steerPid.compute(cte);
 
-steer_value = temp;
 if (temp > 1.0) { steer_value = 1.0;}
 if (temp < -1.0) { steer_value = -1.0;}
-
 ```
 
 Here is the effect of each parameter:
@@ -54,19 +46,21 @@ then there will be oscillations as there will be overshooting.
 the throttle to control the speed.**
 
 ```c
+
 double throttle_value = 1.0;
 
-if (fabs(cte) > 0.75 && speed > 50.0 && fabs(angle) > 10.0 ) {
-  throttle_value = 0.0;
-}
+if (fabs(cte) > 0.6 && fabs(angle) > 7.5 && speed > 50.0) {
+  throttle_value = -1.0; // curve
 ```
 
 Basically what this is doing is that if the error is too high, and the speed is too high,
-and that we are most likely moving in a curve instead of moving straight, we should not throttle,
-so as to be conservative and not hit the curve; but in all other cases we should accelerate to the maximum allowed value. The parameters here are also tuned manually.
+and that we are most likely moving in a curve instead of moving straight, we should decelerate aggressively, so as to be conservative and not hit the curve; but in all other cases we should accelerate to the maximum allowed value. The parameters here are also tuned manually.
 
-This is how we compute the result of the PID. I also display values such as the total running error,
-the average error, and the number of time steps to help us decide how to tune the parameters.
+We get speeds as high as more than 95mph when moving straight but most
+frequently the speed just plays around 65 - 85mph. The minimum speed at the
+curves is 50mph.
+
+This is how we compute the result of the PID. I also display values such as the total running error, the average error, and the number of time steps to help us decide how to tune the parameters.
 
 ```c
 double SimplePIDController::compute(const double error){
